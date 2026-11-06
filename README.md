@@ -1,5 +1,5 @@
-https://mrkey7.github.io/alfun/
 # Alfiyyah
+https://mrkey7.github.io/alfun/
 
 Aplikasi web statis untuk belajar dan menghafal Alfiyyah Ibnu Malik. Antarmuka menggunakan HTML, CSS, dan JavaScript biasa tanpa langkah build atau dependensi paket.
 
