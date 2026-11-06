@@ -123,7 +123,6 @@ function mulaiKuis(kunciBagian = "semua") {
         return;
     }
     statusPemuatan.style.display = "none";
-    ambilElemen("labelBagian").textContent = namaBagian[kunciBagian];
     daftarSoal = acak(dataBaitAktif);
     indeksSoal = 0;
     jumlahBenar = 0;
