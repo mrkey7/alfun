@@ -58,10 +58,12 @@ button:disabled { opacity: .25; cursor: default; }
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
-    display: grid;
-    grid-template-rows: repeat(10, minmax(0, 1fr));
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
 }
 .bait {
+    flex: 0 0 clamp(64px, 9vh, 78px);
     min-width: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 5.5em minmax(0, 1fr);
@@ -94,22 +96,6 @@ button:disabled { opacity: .25; cursor: default; }
     text-align: center;
     white-space: nowrap;
 }
-.navigasi-halaman {
-    flex: 0 0 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navigasi-halaman button {
-    width: 32px;
-    height: 30px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--utama);
-    font-size: 24px;
-    line-height: 1;
-}
 .catatan-halaman { display: none; }
 @media (max-width: 600px) {
     .halaman-muhafadzah { padding-inline: 5px; }
@@ -119,9 +105,4 @@ button:disabled { opacity: .25; cursor: default; }
     }
     .teks-setengah { font-size: min(7.2vh, 3.8vw); }
     .nomor-bait { font-size: min(3vh, 1.6vw); }
-}
-@media (max-height: 560px) {
-    .daftar-bait { grid-template-rows: repeat(10, minmax(64px, 1fr)); }
-    .kepala-halaman { flex-basis: 30px; }
-    .navigasi-halaman { flex-basis: 26px; }
 }
