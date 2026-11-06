@@ -1,0 +1,119 @@
+/* Semua layar lanskap dengan tinggi sampai 600 piksel. */
+@media (orientation: landscape) and (max-height: 600px) {
+.wadah-aplikasi {
+        width: calc(100% - 16px);
+        height: calc(100svh - 16px);
+        max-height: calc(100svh - 16px);
+        margin: 8px auto;
+    }
+
+    #kuis {
+        height: 100%;
+        max-height: 100%;
+        margin-top: 0;
+        padding: 8px 12px;
+        overflow-y: auto;
+    }
+
+    .info-kuis {
+        gap: 6px;
+        font-size: 10px;
+    }
+
+    .jalur-kemajuan {
+        height: 4px;
+        margin: 6px 0 8px;
+    }
+
+    .judul-soal {
+        flex: 0 0 auto;
+        margin-bottom: 4px;
+    }
+
+    .label-soal {
+        font-size: 14px;
+    }
+
+    .nomor-bait {
+        font-size: 15px;
+    }
+
+    .wadah-bait {
+        flex: 0 0 auto;
+        min-height: clamp(72px, 19vh, 92px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    #setengahKanan {
+        grid-row: 1;
+        grid-column: 1;
+        border-left: 1px solid #c9b995;
+        border-bottom: 0;
+    }
+
+    #setengahKiri {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .setengah-bait {
+        min-height: 0;
+        padding: 2px 8px;
+        font-size: clamp(21px, 3vw, 29px);
+        line-height: 1.3;
+    }
+
+    .daftar-pilihan {
+        flex: 0 0 auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+        margin-top: 8px;
+    }
+
+    .pilihan-jawaban {
+        min-height: clamp(48px, 12vh, 60px);
+        padding: 4px 8px;
+        font-size: clamp(17px, 2.5vw, 22px);
+        line-height: 1.3;
+    }
+
+    .aksi {
+        flex: 0 0 auto;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .aksi button {
+        min-height: 34px;
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    .umpan-balik {
+        padding: 5px 7px;
+        font-size: 10px;
+        overflow-wrap: anywhere;
+    }
+
+.wadah-bait {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .setengah-bait {
+        min-height: 100%;
+        padding: 10px;
+        font-size: clamp(24px, 3vw, 34px);
+    }
+
+.setengah-bait {
+        min-height: 64px;
+        padding: 8px 12px;
+        font-size: clamp(20px, 3vw, 28px);
+    }
+
+    .nomor-bait {
+        padding: 2px 10px;
+        font-size: 13px;
+    }
+}

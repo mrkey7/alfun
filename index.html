@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Gaya dasar dimuat lebih dulu, lalu aturan untuk kelompok layar. -->
+<link rel="stylesheet" href="./gaya/dasar.css">
+<link rel="stylesheet" href="./gaya/potret-sempit.css">
+<link rel="stylesheet" href="./gaya/potret-lebar.css">
+<link rel="stylesheet" href="./gaya/landskap-pendek.css">
+<link rel="stylesheet" href="./gaya/landskap-tinggi.css">
+<title>Alfiyyah - Belajar Alfiyyah Ibnu Malik</title>
+</head>
+<body>
+<main class="wadah-aplikasi">
+<section class="panel panel-beranda" id="beranda">
+        <div class="identitas-beranda">
+            <h1 class="judul-arab" lang="ar">أَلْفِيَّةُ ابْنِ مَالِكٍ</h1>
+						<p class="subjudul-beranda">Alfiyyah Mastery Challenge</p>
+        </div>
+        <div class="isi-beranda">
+            <p class="basmalah" lang="ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+             <button class="mode-arab" id="modeArab" type="button">
+    <span lang="ar">مُحَافَظَةٌ</span>
+</button>
+                    <div class="pilihan-bagian">
+                        <button class="tombol-bagian" data-bagian="awal" type="button" disabled><strong lang="ar">الجزء الأول</strong><span>(١-٣٣٤)</span></button>
+                        <button class="tombol-bagian" data-bagian="tsani" type="button" disabled><strong lang="ar">الجزء الثاني</strong><span>(٣٣٥-٦٦٨)</span></button>
+                        <button class="tombol-bagian" data-bagian="tsalits" type="button" disabled><strong lang="ar">الجزء الثالث</strong><span>(٦٦٩-١٠٠٣)</span></button>
+                        <button class="tombol-bagian" data-bagian="semua" type="button" disabled><strong lang="ar">ألفية كاملة</strong><span lang="ar">١٠٠٣ بيت</span></button>
+                    </div>
+                </section>
+            </div>
+            <div class="status-pemuatan" id="statusPemuatan" role="status" aria-live="polite">Memuat data Alfiyyah...</div>
+        </div>
+        <footer class="kaki-beranda"><span>ALFIYYAH · ©2026 mr.key7@gmail.com Tebuireng3</span><button class="tombol-hapus-tembolok" id="tombolAturUlangTembolok" type="button" aria-label="Reset cache" title="Reset cache">R</button></footer>
+    </section>
+
+    <section class="panel" id="kuis">
+        <div class="info-kuis">
+            <span id="nomorSoal">1 dari 0</span>
+            <span>Sisa Quiz: <strong id="sisaKuis">0</strong></span>
+            <span>Benar: <strong id="skor">0</strong></span>
+            <span>Waktu: <strong id="waktu">00:00</strong></span>
+        </div>
+        <div class="jalur-kemajuan"><div id="batangKemajuan"></div></div>
+
+        <div class="judul-soal">
+            <p class="label-soal">Lengkapi bait berikut:</p>
+            <button class="tombol-harakat" id="tombolHarakat" type="button" lang="ar" aria-label="Ubah tampilan harakat" aria-pressed="true">حَرَكَات</button>
+            <div class="nomor-bait" id="nomorBait" lang="ar"></div>
+        </div>
+        <div class="wadah-bait" id="wadahBait">
+            <div class="setengah-bait" id="setengahKanan" lang="ar"></div>
+            <div class="setengah-bait" id="setengahKiri" lang="ar"></div>
+        </div>
+        <div class="daftar-pilihan" id="daftarPilihan"></div>
+        <div class="aksi">
+            <div class="umpan-balik" id="umpanBalik" aria-live="polite"></div>
+            <button class="utama" id="tombolBerikutnya" type="button" disabled>Soal Berikutnya</button>
+            <button class="sekunder" id="tombolSelesai" type="button">Selesai</button>
+        </div>
+    </section>
+
+    <section class="panel" id="hasil">
+        <p class="label-soal">Sesi kuis selesai</p>
+        <div class="skor-hasil" id="skorAkhir">0/0</div>
+        <div class="rincian-hasil" id="rincianAkhir"></div>
+        <div class="aksi aksi-hasil">
+            <button class="utama" id="tombolUlangi" type="button">Ulangi Bagian Sebelumnya</button>
+            <button class="sekunder" id="tombolBeranda" type="button">Pilih Bagian Lain</button>
+        </div>
+    </section>
+</main>
+<script src="./app.js?v=reset1" defer></script>
+</body>
+</html>

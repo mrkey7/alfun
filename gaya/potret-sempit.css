@@ -1,0 +1,125 @@
+/* Layar potret dengan lebar sampai 700 piksel. */
+@media (orientation: portrait) and (max-width: 700px) {
+.wadah-aplikasi {
+        width: calc(100% - 16px);
+        height: calc(100svh - 16px);
+        max-height: calc(100svh - 16px);
+        margin: 8px auto;
+    }
+
+    .panel { padding: 10px; }
+    .panel-beranda { padding: 0; }
+    .daftar-menu { gap: 10px; margin-top: 14px; }
+    .kartu-menu { padding: 14px; }
+    .keterangan-menu { font-size: 12px; }
+    .label-pilihan-bagian { margin-top: 12px; font-size: 13px; }
+    .pilihan-bagian { gap: 8px; }
+    .tombol-bagian { min-height: 66px; padding: 9px 5px; gap:5px; }
+    .tombol-bagian strong { font-size: 15px; }
+    .tombol-bagian span { font-size: 9px; }
+
+    .judul-soal {
+        margin-bottom: 7px;
+    }
+
+    .label-soal {
+        font-size: 15px;
+    }
+
+    .nomor-bait {
+        font-size: 16px;
+    }
+
+    .wadah-bait {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        min-height: clamp(190px, 30vh, 280px);
+        gap: 0;
+        border-radius: 10px;
+    }
+
+    #setengahKanan {
+        grid-row: 1;
+        grid-column: 1;
+        border-left: 0;
+        border-bottom: 1px solid #c9b995;
+    }
+
+    #setengahKiri {
+        grid-row: 2;
+        grid-column: 1;
+    }
+
+    .setengah-bait {
+        min-height: 0;
+        padding: 12px 14px;
+        font-size: clamp(25px, 6.5vw, 36px);
+        line-height: 1.65;
+        text-align: center;
+    }
+
+    .daftar-pilihan {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-top: 12px;
+    }
+
+    .pilihan-jawaban {
+        min-height: clamp(44px, 6vh, 56px);
+        padding: 7px 9px;
+        /* Ubah tiga angka ini untuk mengatur ukuran teks Arab pilihan jawaban. 
+        font-size: clamp(18px, 4.5vw, 23px); */
+				font-size: clamp(20px, 5vw, 26px);
+        line-height: 1.5;
+    }
+
+    .umpan-balik {
+        margin: 0;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .info-kuis { gap: 4px; font-size: 10px; }
+    .aksi { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 5px; margin-top: 8px; }
+    .aksi button { padding: 9px 10px; font-size: 12px; }
+    #umpanBalik { font-size: 11px; padding: 7px; }
+
+.wadah-bait {
+        flex: 0 0 auto;
+        height: clamp(150px, 22vh, 210px);
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    #setengahKanan {
+        grid-row: 1;
+        grid-column: 1;
+        border-left: 0;
+        border-bottom: 1px solid #c9b995;
+    }
+
+    #setengahKiri {
+        grid-row: 2;
+        grid-column: 1;
+    }
+
+    .setengah-bait {
+        min-height: 0;
+        padding: 4px 8px;
+        font-size: clamp(28px, 8vw, 42px);
+				/*clamp(nilai minimum, nilai fleksibel, nilai maksimum) */
+				line-height: 1.2;
+    }
+
+    #kuis .daftar-pilihan {
+        flex: 1 0 auto;
+        grid-auto-rows: minmax(54px, 1fr);
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .pilihan-jawaban {
+        min-height: 54px;
+    }
+}
