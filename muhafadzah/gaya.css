@@ -59,7 +59,7 @@ button:disabled { opacity: .25; cursor: default; }
     min-height: 0;
     overflow-y: auto;
     display: grid;
-    grid-template-rows: repeat(10, minmax(64px, 1fr));
+    grid-template-rows: repeat(10, minmax(0, 1fr));
 }
 .bait {
     min-width: 0;
@@ -74,7 +74,7 @@ button:disabled { opacity: .25; cursor: default; }
     color: #172744;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
     font-size: min(7.5vh, 3.8vw);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.15;
     white-space: nowrap;
 }
@@ -120,7 +120,8 @@ button:disabled { opacity: .25; cursor: default; }
     .teks-setengah { font-size: min(7.2vh, 3.8vw); }
     .nomor-bait { font-size: min(3vh, 1.6vw); }
 }
-@media (max-height: 560px) {
+@media (max-height: 650px) {
+    .daftar-bait { grid-template-rows: repeat(10, minmax(64px, 1fr)); }
     .kepala-halaman { flex-basis: 30px; }
     .navigasi-halaman { flex-basis: 26px; }
 }
