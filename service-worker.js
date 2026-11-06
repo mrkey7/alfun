@@ -1,4 +1,4 @@
-const NAMA_TEMBOLOK = "alfiyah-quiz-v25";
+const NAMA_TEMBOLOK = "alfiyah-quiz-v26";
 const DASAR_APLIKASI = new URL("./", self.location.href);
 const HALAMAN_APLIKASI = new URL("index.html", DASAR_APLIKASI).href;
 const BERKAS_DATA = new URL("ألف.json", DASAR_APLIKASI).href;
