@@ -52,16 +52,11 @@ function tampilkanDaftar() {
     dataBait.forEach(bait => {
         const topik = String(bait["موضوع"] ?? "").trim();
         if (topik && topik !== topikSebelumnya) {
-            const judul = document.createElement("article");
-            judul.className = "bait judul-bab";
-
-            const teksJudul = document.createElement("div");
-            teksJudul.className = "teks-judul";
-            teksJudul.lang = "ar";
-            teksJudul.dir = "rtl";
-            teksJudul.textContent = topik;
-
-            judul.appendChild(teksJudul);
+            const judul = document.createElement("div");
+            judul.className = "judul-bab";
+            judul.lang = "ar";
+            judul.dir = "rtl";
+            judul.textContent = topik;
             daftarBait.appendChild(judul);
         }
         topikSebelumnya = topik;
