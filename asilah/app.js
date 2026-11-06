@@ -1,4 +1,8 @@
 "use strict";
+
+if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+    location.replace("../index.html");
+}
 const ambilElemen = pengenal => document.getElementById(pengenal);
 
 const ALAMAT_DATA = "../ألف.json";
