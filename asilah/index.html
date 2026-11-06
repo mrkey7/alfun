@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../gaya/dasar.css">
+<link rel="stylesheet" href="../gaya/potret-sempit.css">
+<link rel="stylesheet" href="../gaya/potret-lebar.css">
+<link rel="stylesheet" href="../gaya/landskap-pendek.css">
+<link rel="stylesheet" href="../gaya/landskap-tinggi.css">
+<title>Asilah · Alfiyyah</title>
+</head>
+<body>
+<main class="wadah-aplikasi">
+    <p class="status-pemuatan" id="statusPemuatan" role="status" aria-live="polite">Memuat data Alfiyyah...</p>
+    <section class="panel" id="kuis">
+        <div class="info-kuis">
+            <a class="sekunder" href="../index.html" style="display:inline-flex;align-items:center;text-decoration:none">Beranda</a>
+            <span id="labelBagian" lang="ar"></span>
+            <span id="nomorSoal">1 dari 0</span>
+            <span>Sisa Quiz: <strong id="sisaKuis">0</strong></span>
+            <span>Benar: <strong id="skor">0</strong></span>
+            <span>Waktu: <strong id="waktu">00:00</strong></span>
+        </div>
+        <div class="jalur-kemajuan"><div id="batangKemajuan"></div></div>
+        <div class="judul-soal">
+            <p class="label-soal">Lengkapi bait berikut:</p>
+            <button class="tombol-harakat" id="tombolHarakat" type="button" lang="ar" aria-label="Ubah tampilan harakat" aria-pressed="true">حَرَكَات</button>
+            <div class="nomor-bait" id="nomorBait" lang="ar"></div>
+        </div>
+        <div class="wadah-bait" id="wadahBait">
+            <div class="setengah-bait" id="setengahKanan" lang="ar"></div>
+            <div class="setengah-bait" id="setengahKiri" lang="ar"></div>
+        </div>
+        <div class="daftar-pilihan" id="daftarPilihan"></div>
+        <div class="aksi">
+            <div class="umpan-balik" id="umpanBalik" aria-live="polite"></div>
+            <button class="utama" id="tombolBerikutnya" type="button" disabled>Soal Berikutnya</button>
+            <button class="sekunder" id="tombolSelesai" type="button">Selesai</button>
+        </div>
+    </section>
+    <section class="panel" id="hasil">
+        <p class="label-soal">Sesi kuis selesai</p>
+        <div class="skor-hasil" id="skorAkhir">0/0</div>
+        <div class="rincian-hasil" id="rincianAkhir"></div>
+        <div class="aksi aksi-hasil">
+            <button class="utama" id="tombolUlangi" type="button">Ulangi Bagian Ini</button>
+            <button class="sekunder" id="tombolBeranda" type="button">Kembali ke Beranda</button>
+        </div>
+    </section>
+</main>
+<script src="../global/teks.js"></script>
+<script src="./app.js" defer></script>
+</body>
+</html>

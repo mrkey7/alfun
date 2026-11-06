@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./gaya.css">
+<title>Muhafadzah · Alfiyyah</title>
+</head>
+<body>
+<main class="halaman-muhafadzah">
+    <header class="kepala-halaman">
+        <a class="tombol-beranda" href="../index.html" aria-label="Kembali ke beranda">‹ <span>Beranda</span></a>
+        <div class="identitas-mode">
+            <h1 lang="ar">مُحَافَظَةٌ</h1>
+            <p id="labelBagian">Memuat bagian...</p>
+        </div>
+        <div class="aksi-kepala">
+            <button class="tombol-harakat" id="tombolHarakat" type="button" lang="ar" aria-pressed="true" aria-label="Ubah tampilan harakat">حَرَكَات</button>
+            <button class="tombol-judul" id="tombolJudul" type="button" aria-expanded="false" aria-controls="panelJudul"><span aria-hidden="true">⋮</span> Judul</button>
+        </div>
+    </header>
+    <div class="info-halaman">
+        <span id="rentangBait">Memuat bait...</span>
+        <span id="jumlahBait"></span>
+    </div>
+    <section class="daftar-bait" id="daftarBait" aria-live="polite"></section>
+    <nav class="navigasi-halaman" aria-label="Navigasi halaman">
+        <button id="tombolSebelumnya" type="button" disabled>‹ Sebelumnya</button>
+        <span id="nomorHalaman">Halaman 1</span>
+        <button id="tombolBerikutnya" type="button" disabled>Berikutnya ›</button>
+    </nav>
+    <p class="catatan-halaman" id="statusPemuatan" role="status" aria-live="polite"></p>
+</main>
+<div class="lapisan-menu" id="lapisanMenu" hidden>
+    <button class="latar-menu" id="tutupMenuLatar" type="button" aria-label="Tutup daftar judul"></button>
+    <aside class="panel-judul" id="panelJudul" aria-label="Daftar judul">
+        <header class="kepala-panel-judul">
+            <div><strong>Daftar Judul</strong><span id="jumlahJudul"></span></div>
+            <button id="tombolTutupJudul" type="button" aria-label="Tutup">×</button>
+        </header>
+        <div class="isi-panel-judul" id="daftarJudul"></div>
+    </aside>
+</div>
+<script src="../global/teks.js"></script>
+<script src="./app.js" defer></script>
+</body>
+</html>

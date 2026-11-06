@@ -1,0 +1,169 @@
+:root {
+    color-scheme: light;
+    --warna-teks: #24324b;
+    --warna-teks-redup: #746e62;
+    --warna-garis: #ded5c3;
+    --warna-panel: #fffdf8;
+    --warna-latar: #f2eee5;
+    --warna-utama: #24365b;
+    --warna-emas: #b89a5a;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--warna-latar);
+    color: var(--warna-teks);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+button, a { font: inherit; }
+.wadah-aplikasi {
+    width: calc(100% - clamp(16px, 4vw, 64px));
+    max-width: 1450px;
+    min-height: calc(100svh - 32px);
+    margin: 16px auto;
+}
+.panel-beranda {
+    min-height: calc(100svh - 32px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #f8f3e8;
+    border: 1px solid #d9ceb8;
+    border-radius: 16px;
+}
+.identitas-beranda {
+    padding: clamp(24px, 4vw, 42px) 20px;
+    background: #1b2e52;
+    color: #fff;
+    text-align: center;
+    border-bottom: 3px solid var(--warna-emas);
+}
+.judul-arab {
+    margin: 0;
+    color: #f7e9c7;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 600;
+    line-height: 1.5;
+}
+.subjudul-beranda {
+    margin: 6px 0 0;
+    color: #e2d8c4;
+    font-size: clamp(13px, 1.4vw, 17px);
+    letter-spacing: .12em;
+}
+.isi-beranda {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    padding: clamp(22px, 4vw, 42px) clamp(16px, 3vw, 32px);
+    flex: 1;
+}
+.basmalah {
+    margin: 0 0 6px;
+    color: #354361;
+    direction: rtl;
+    text-align: center;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.8;
+}
+.keterangan-beranda {
+    margin: 0 0 22px;
+    color: var(--warna-teks-redup);
+    text-align: center;
+    font-size: 15px;
+}
+.daftar-menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 16px;
+}
+.kartu-menu {
+    padding: clamp(16px, 2.4vw, 26px);
+    background: var(--warna-panel);
+    border: 1px solid var(--warna-garis);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgb(35 42 55 / 5%);
+}
+.judul-menu {
+    margin: 0;
+    color: var(--warna-utama);
+    font-size: clamp(19px, 2vw, 24px);
+}
+.keterangan-menu {
+    min-height: 42px;
+    margin: 7px 0 16px;
+    color: var(--warna-teks-redup);
+    font-size: 14px;
+    line-height: 1.55;
+}
+.pilihan-bagian {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+.tombol-bagian {
+    display: flex;
+    flex-direction: row;
+    direction: rtl;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 66px;
+    padding: 10px 8px;
+    border: 1px solid var(--warna-utama);
+    border-radius: 11px;
+    background: var(--warna-utama);
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.tombol-bagian:hover { background: #172949; }
+.tombol-bagian strong { font-family: "Noto Naskh Arabic", serif; font-size: 18px; }
+.tombol-bagian span {
+    direction: ltr;
+    unicode-bidi: isolate;
+    color: #e2d8c4;
+    font-size: 11px;
+}
+.kaki-beranda {
+    position: relative;
+    margin-top: auto;
+    padding: 13px 42px;
+    border-top: 1px solid #e2d8c6;
+    color: #8a806e;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-align: center;
+}
+.tombol-hapus-tembolok {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 1px solid #c9bea9;
+    border-radius: 5px;
+    background: transparent;
+    color: #8a806e;
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+}
+.tombol-hapus-tembolok:hover { background: #eee5d5; }
+@media (max-width: 760px) {
+    .wadah-aplikasi { width: calc(100% - 16px); min-height: calc(100svh - 16px); margin: 8px auto; }
+    .panel-beranda { min-height: calc(100svh - 16px); }
+    .daftar-menu { grid-template-columns: 1fr; gap: 12px; }
+    .isi-beranda { padding: 20px 12px; }
+    .keterangan-menu { min-height: 0; margin-bottom: 12px; }
+    .pilihan-bagian { gap: 8px; }
+    .tombol-bagian { min-height: 58px; gap: 5px; }
+    .tombol-bagian strong { font-size: 15px; }
+    .tombol-bagian span { font-size: 10px; }
+}
