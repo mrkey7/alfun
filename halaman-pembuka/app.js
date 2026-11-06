@@ -44,6 +44,15 @@ tombolAturUlangTembolok.addEventListener("click", async () => {
 
     tombolAturUlangTembolok.disabled = true;
     try {
+        const dasarAplikasi = new URL("./", location.href);
+
+        const daftarPendaftaran = await navigator.serviceWorker?.getRegistrations() ?? [];
+        await Promise.all(
+            daftarPendaftaran
+                .filter(pendaftaran => pendaftaran.scope.startsWith(dasarAplikasi.href))
+                .map(pendaftaran => pendaftaran.unregister())
+        );
+
         const daftarKunci = await caches.keys();
         await Promise.all(
             daftarKunci
@@ -51,12 +60,15 @@ tombolAturUlangTembolok.addEventListener("click", async () => {
                 .map(kunci => caches.delete(kunci))
         );
 
-        const pendaftaran = await navigator.serviceWorker?.getRegistration("./");
-        if (pendaftaran) await pendaftaran.unregister();
-        location.reload();
+        localStorage.removeItem("alfun-mode");
+        sessionStorage.clear();
+
+        const alamatBaru = new URL(location.href);
+        alamatBaru.searchParams.set("_reset", Date.now().toString());
+        location.replace(alamatBaru.href);
     } catch (kesalahan) {
         tombolAturUlangTembolok.disabled = false;
-        alert("Cache gagal dihapus: " + kesalahan.message);
+        alert("Reset aplikasi gagal: " + kesalahan.message);
     }
 });
 
