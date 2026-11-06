@@ -63,11 +63,10 @@ button:disabled { opacity: .25; cursor: default; }
     flex-direction: column;
 }
 .judul-bab {
-    flex: 0 0 clamp(64px, 9vh, 78px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-inline: 8px;
+    justify-items: center;
+}
+.teks-judul {
+    grid-column: 1 / -1;
     color: #9a875f;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
     font-size: min(6.5vh, 3.3vw);
