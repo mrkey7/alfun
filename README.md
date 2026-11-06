@@ -45,7 +45,8 @@ Tombol **Harakat** tersedia pada Muhafadzah dan Asilah. Keduanya menggunakan fun
 - `global/teks.js` — fungsi bersama untuk menghapus harakat dari tampilan.
 - `muhafadzah/` — halaman, skrip, dan gaya khusus Muhafadzah.
 - `asilah/` — halaman dan skrip khusus kuis.
-- `gaya/` — gaya responsif Asilah yang dipertahankan dari versi kuis sebelumnya.
+- `asilah/gaya/` — gaya responsif khusus Asilah, dipisah menurut ukuran dan orientasi layar.
+- `gaya/` — gaya versi lama yang tetap disimpan untuk halaman cadangan.
 - `ألف.json` — sumber data bait.
 - `service-worker.js` — cache untuk penggunaan offline.
 - `jalankan_server.py` dan `mulai_kuis.bat` — server lokal dan peluncur Windows.

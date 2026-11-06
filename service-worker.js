@@ -12,11 +12,12 @@ const DAFTAR_ASET = [
     "muhafadzah/index.html",
     "muhafadzah/app.js",
     "muhafadzah/gaya.css",
-    "gaya/dasar.css",
-    "gaya/potret-sempit.css",
-    "gaya/potret-lebar.css",
-    "gaya/landskap-pendek.css",
-    "gaya/landskap-tinggi.css"
+    "asilah/gaya/dasar.css",
+    "asilah/gaya/potret-sempit.css",
+    "asilah/gaya/potret-lebar.css",
+    "asilah/gaya/landskap-pendek.css",
+    "asilah/gaya/landskap-tinggi.css",
+    "asilah/gaya/penyesuaian.css"
 ].map(jalur => new URL(jalur, DASAR_APLIKASI).href);
 const JALUR_CAKUPAN = DASAR_APLIKASI.pathname;
 
