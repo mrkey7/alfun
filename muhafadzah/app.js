@@ -60,7 +60,7 @@ function tampilkanHalaman(indeksHalaman) {
         const nomor = document.createElement("div");
         nomor.className = "nomor-bait";
         nomor.lang = "ar";
-        nomor.textContent = String(bait["ن"] ?? bait["نمر"] ?? "");
+        nomor.textContent = "(" + String(bait["ن"] ?? bait["نمر"] ?? "") + ")";
 
         const awal = document.createElement("div");
         awal.className = "teks-setengah";
@@ -78,6 +78,7 @@ function tampilkanHalaman(indeksHalaman) {
         daftarBait.appendChild(baris);
     });
 
+    daftarBait.scrollTop = 0;
     ambil("nomorHalaman").textContent = String(halamanAktif + 1);
     ambil("tombolSebelumnya").disabled = halamanAktif === 0;
     ambil("tombolBerikutnya").disabled = halamanAktif >= jumlahHalaman - 1;
