@@ -63,7 +63,9 @@ button:disabled { opacity: .25; cursor: default; }
 .bait {
     min-height: 0;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 46px minmax(0, 1fr);
+    grid-template-columns: fit-content(42%) auto fit-content(42%);
+    justify-content: center;
+    column-gap: clamp(12px, 2vw, 28px);
     align-items: center;
     border-bottom: 1px solid var(--garis);
 }
@@ -83,11 +85,10 @@ button:disabled { opacity: .25; cursor: default; }
     overflow-wrap: anywhere;
 }
 .nomor-bait {
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-inline: 1px solid #e8e1d5;
+    padding-inline: 2px;
     color: #a18b5e;
     font-family: "Noto Naskh Arabic", serif;
     font-size: clamp(15px, 1.7vw, 21px);
@@ -115,7 +116,7 @@ button:disabled { opacity: .25; cursor: default; }
 }
 @media (max-width: 600px) {
     .halaman-muhafadzah { padding-inline: 5px; }
-    .bait { grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr); }
+    .bait { column-gap: clamp(8px, 2vw, 16px); }
     .teks-setengah {
         font-size: clamp(13px, min(3.7vw, 2.45vh), 22px);
         line-height: 1.35;
