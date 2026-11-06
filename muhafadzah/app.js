@@ -62,15 +62,19 @@ function tampilkanHalaman(indeksHalaman) {
         nomor.lang = "ar";
         nomor.textContent = String(bait["ن"] ?? bait["نمر"] ?? "");
 
-        const teks = document.createElement("div");
-        teks.className = "teks-bait";
-        teks.lang = "ar";
-        teks.dir = "rtl";
-        teks.dataset.awal = String(bait["أول"] ?? "");
-        teks.dataset.akhir = String(bait["ثَان"] ?? "");
-        teks.textContent = teksTampilan(teks.dataset.awal + " " + teks.dataset.akhir);
+        const awal = document.createElement("div");
+        awal.className = "teks-setengah";
+        awal.lang = "ar";
+        awal.dir = "rtl";
+        awal.textContent = teksTampilan(String(bait["أول"] ?? ""));
 
-        baris.append(nomor, teks);
+        const akhir = document.createElement("div");
+        akhir.className = "teks-setengah";
+        akhir.lang = "ar";
+        akhir.dir = "rtl";
+        akhir.textContent = teksTampilan(String(bait["ثَان"] ?? ""));
+
+        baris.append(awal, nomor, akhir);
         daftarBait.appendChild(baris);
     });
 
