@@ -154,6 +154,22 @@ h1, h2, p { margin-top: 0; }
     font-weight: 650;
 }
 
+.mode-arab {
+    display: block;
+    margin: 8px auto 18px;
+    padding: 4px 18px;
+    border: 0;
+    background: transparent;
+    color: var(--warna-utama-gelap);
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(38px, 4.2vw, 52px);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+}
+.mode-arab:hover { color: #9b7838; }
+.mode-arab span { display: inline-block; }
+
 .pilihan-bagian {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

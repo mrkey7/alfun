@@ -1,9 +1,14 @@
-const NAMA_TEMBOLOK = "alfiyah-quiz-v19";
+const NAMA_TEMBOLOK = "alfiyah-quiz-v20";
 const DASAR_APLIKASI = new URL("./", self.location.href);
 const HALAMAN_APLIKASI = new URL("index.html", DASAR_APLIKASI).href;
 const BERKAS_DATA = new URL("ألف.json", DASAR_APLIKASI).href;
 const DAFTAR_ASET = [
     "index.html",
+    "gaya/dasar.css",
+    "gaya/potret-sempit.css",
+    "gaya/potret-lebar.css",
+    "gaya/landskap-pendek.css",
+    "gaya/landskap-tinggi.css",
     "halaman-pembuka/beranda.css",
     "halaman-pembuka/app.js",
     "global/teks.js",
