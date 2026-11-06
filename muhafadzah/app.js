@@ -1,7 +1,6 @@
 "use strict";
 
 const HAPUS_HARAKAT = window.AlfiyahTeks.hapusHarakat;
-const JUMLAH_BAIT_PER_HALAMAN = 10;
 const BAGIAN = {
     awal: { mulai:1, akhir:334 },
     tsani: { mulai:335, akhir:668 },
@@ -12,7 +11,6 @@ const BAGIAN = {
 const kunciBagian = new URLSearchParams(location.search).get("bagian") || "semua";
 const bagian = BAGIAN[kunciBagian] || BAGIAN.semua;
 let dataBait = [];
-let halamanAktif = 0;
 let harakatDitampilkan = true;
 
 const ambil = id => document.getElementById(id);
@@ -39,21 +37,17 @@ async function muatData() {
 
         if (!dataBait.length) throw new Error("Tidak ada bait pada bagian ini.");
         ambil("statusPemuatan").textContent = "";
-        tampilkanHalaman(0);
+        tampilkanDaftar();
     } catch (kesalahan) {
         ambil("statusPemuatan").textContent = "Gagal memuat: " + kesalahan.message;
     }
 }
 
-function tampilkanHalaman(indeksHalaman) {
-    const jumlahHalaman = Math.ceil(dataBait.length / JUMLAH_BAIT_PER_HALAMAN);
-    halamanAktif = Math.max(0, Math.min(indeksHalaman, jumlahHalaman - 1));
-
-    const mulai = halamanAktif * JUMLAH_BAIT_PER_HALAMAN;
-    const baitHalaman = dataBait.slice(mulai, mulai + JUMLAH_BAIT_PER_HALAMAN);
+function tampilkanDaftar() {
+    const posisiScroll = daftarBait.scrollTop;
     daftarBait.replaceChildren();
 
-    baitHalaman.forEach(bait => {
+    dataBait.forEach(bait => {
         const baris = document.createElement("article");
         baris.className = "bait";
 
@@ -78,26 +72,15 @@ function tampilkanHalaman(indeksHalaman) {
         daftarBait.appendChild(baris);
     });
 
-    daftarBait.scrollTop = 0;
-    ambil("nomorHalaman").textContent = String(halamanAktif + 1);
-    ambil("tombolSebelumnya").disabled = halamanAktif === 0;
-    ambil("tombolBerikutnya").disabled = halamanAktif >= jumlahHalaman - 1;
+    daftarBait.scrollTop = posisiScroll;
 }
 
-ambil("tombolSebelumnya").addEventListener("click", () => {
-    tampilkanHalaman(halamanAktif - 1);
-    window.scrollTo({ top:0, behavior:"smooth" });
-});
-ambil("tombolBerikutnya").addEventListener("click", () => {
-    tampilkanHalaman(halamanAktif + 1);
-    window.scrollTo({ top:0, behavior:"smooth" });
-});
 ambil("tombolHarakat").addEventListener("click", () => {
     harakatDitampilkan = !harakatDitampilkan;
     const tombol = ambil("tombolHarakat");
     tombol.setAttribute("aria-pressed", String(harakatDitampilkan));
     tombol.textContent = harakatDitampilkan ? "حَرَكَات" : "حركات";
-    tampilkanHalaman(halamanAktif);
+    tampilkanDaftar();
 });
 
 if ("serviceWorker" in navigator) {
