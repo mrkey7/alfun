@@ -10,10 +10,10 @@ Untuk menjalankan langsung dari terminal, gunakan `python jalankan_server.py`. S
 
 ## Menu belajar
 
-Beranda menyediakan dua blok belajar. Pilih salah satu dari empat bagian untuk membuka blok secara langsung:
+Beranda mempertahankan satu tombol mode di atas empat pilihan bagian. Tombol mode berganti antara Muhafadzah dan Asilah; empat tombol bagian tetap sama dan membuka mode yang sedang dipilih:
 
-- **Muhafadzah** — menampilkan bait dalam urutan asli. Secara bawaan berisi 10 bait per halaman; jumlah ini dapat diubah pada konstanta `JUMLAH_BAIT_PER_HALAMAN` di `muhafadzah/app.js`. Tombol **Judul (⋮)** membuka panel samping untuk melompat ke halaman awal suatu judul. Daftar judul dibentuk dari kolom `موضوع` pada data.
-- **Asilah** — kuis melengkapi setengah bait dengan empat pilihan jawaban berdasarkan kunci rima. Urutan soal diacak untuk setiap sesi.
+- **Muhafadzah** — menampilkan bait dalam urutan asli, 10 bait per halaman. Tombol **Judul (⋮)** membuka daftar shortcut judul.
+- **Asilah** — kuis melengkapi bait dengan empat pilihan berdasarkan rima.
 
 Bagian data yang tersedia:
 

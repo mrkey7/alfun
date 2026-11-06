@@ -1,9 +1,42 @@
 "use strict";
 
-const tombolAturUlangTembolok = document.getElementById("tombolAturUlangTembolok");
+const modeArab = document.getElementById("modeArab");
+const tombolBagian = [...document.querySelectorAll("[data-bagian]")];
+let modeTerpilih = "muhafadzah";
 
+modeArab.addEventListener("click", () => {
+    modeTerpilih = modeTerpilih === "muhafadzah" ? "asilah" : "muhafadzah";
+    modeArab.innerHTML = modeTerpilih === "muhafadzah"
+        ? '<span lang="ar">مُحَافَظَةٌ</span>'
+        : '<span lang="ar">أَسْئِلَةٌ</span>';
+});
+
+tombolBagian.forEach(tombol => {
+    tombol.addEventListener("click", () => {
+        location.href = "./" + modeTerpilih + "/index.html?bagian=" + tombol.dataset.bagian;
+    });
+});
+
+async function muatData() {
+    const status = document.getElementById("statusPemuatan");
+
+    try {
+        const tanggapan = await fetch("./ألف.json");
+        if (!tanggapan.ok) throw new Error("HTTP " + tanggapan.status);
+
+        const data = await tanggapan.json();
+        if (!data || !Array.isArray(data.rows)) throw new Error("Format data tidak sesuai.");
+
+        tombolBagian.forEach(tombol => tombol.disabled = false);
+        status.textContent = "";
+    } catch (kesalahan) {
+        status.textContent = "Gagal memuat data: " + kesalahan.message;
+    }
+}
+
+const tombolAturUlangTembolok = document.getElementById("tombolAturUlangTembolok");
 tombolAturUlangTembolok.addEventListener("click", async () => {
-    if (!confirm("Hapus cache Alfiyah dan muat ulang aplikasi?")) return;
+    if (!confirm("Hapus cache Alfiyah Quiz dan muat ulang aplikasi?")) return;
 
     tombolAturUlangTembolok.disabled = true;
     try {
@@ -27,3 +60,5 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js")
         .catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
 }
+
+muatData();
