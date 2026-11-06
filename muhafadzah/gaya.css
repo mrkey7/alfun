@@ -120,7 +120,7 @@ button:disabled { opacity: .25; cursor: default; }
     .teks-setengah { font-size: min(7.2vh, 3.8vw); }
     .nomor-bait { font-size: min(3vh, 1.6vw); }
 }
-@media (max-height: 650px) {
+@media (max-height: 560px) {
     .daftar-bait { grid-template-rows: repeat(10, minmax(64px, 1fr)); }
     .kepala-halaman { flex-basis: 30px; }
     .navigasi-halaman { flex-basis: 26px; }
