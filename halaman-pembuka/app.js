@@ -2,10 +2,14 @@
 
 const modeArab = document.getElementById("modeArab");
 const tombolBagian = [...document.querySelectorAll("[data-bagian]")];
-let modeTerpilih = "muhafadzah";
+let modeTerpilih = localStorage.getItem("alfun-mode") === "asilah" ? "asilah" : "muhafadzah";
+modeArab.innerHTML = modeTerpilih === "muhafadzah"
+    ? '<span lang="ar">مُحَافَظَةٌ</span>'
+    : '<span lang="ar">أَسْئِلَةٌ</span>';
 
 modeArab.addEventListener("click", () => {
     modeTerpilih = modeTerpilih === "muhafadzah" ? "asilah" : "muhafadzah";
+    localStorage.setItem("alfun-mode", modeTerpilih);
     modeArab.innerHTML = modeTerpilih === "muhafadzah"
         ? '<span lang="ar">مُحَافَظَةٌ</span>'
         : '<span lang="ar">أَسْئِلَةٌ</span>';
