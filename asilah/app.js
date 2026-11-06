@@ -1,8 +1,11 @@
 "use strict";
 
-if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
-    location.replace("../index.html");
-}
+const navigasi = performance.getEntriesByType("navigation")[0];
+const sedangReload = navigasi
+    ? navigasi.type === "reload"
+    : performance.navigation?.type === 1;
+
+if (sedangReload) location.replace(new URL("../index.html", location.href).href);
 const ambilElemen = pengenal => document.getElementById(pengenal);
 
 const ALAMAT_DATA = "../ألف.json";
