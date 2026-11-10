@@ -32,7 +32,12 @@ ambilElemen("tombolHarakat").addEventListener("click", () => {
 async function muatDataDaring() {
     statusPemuatan.textContent = "Memuat data Alfiyyah...";
     try {
-        const tanggapan = await fetch(ALAMAT_DATA);
+        const alamatData = new URL(ALAMAT_DATA, location.href);
+        const token = new URLSearchParams(location.search).get("_fresh");
+        if (token) alamatData.searchParams.set("_fresh", token);
+        const tanggapan = await fetch(alamatData.href, {
+            cache: token ? "no-store" : "default"
+        });
         if (!tanggapan.ok) throw new Error(`HTTP ${tanggapan.status}`);
         siapkanData(await tanggapan.json());
         statusPemuatan.textContent = "";
@@ -318,7 +323,7 @@ ambilElemen("tombolBeranda").addEventListener("click", () => {
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("../service-worker.js")
+    navigator.serviceWorker.register("../service-worker.js", { updateViaCache:"none" })
         .catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
 }
 
