@@ -94,8 +94,8 @@ button:disabled { opacity: .25; cursor: default; }
     line-height: 1.15;
     white-space: nowrap;
 }
-.teks-setengah:first-child { text-align: right; }
-.teks-setengah:last-child { text-align: left; }
+.teks-setengah:first-child { text-align: left; }
+.teks-setengah:last-child { text-align: right; }
 .nomor-bait {
     width: 100%;
     display: flex;
