@@ -243,6 +243,16 @@ function pilihJawaban(tombolTerpilih, jawaban, jawabanBenar) {
     jumlahDijawab++;
     if (jawaban === jawabanBenar) {
         jumlahBenar++;
+
+        const kolomKosong = [ambilElemen("setengahKanan"), ambilElemen("setengahKiri")]
+            .find(setengah => setengah.classList.contains("kosong"));
+
+        if (kolomKosong) {
+            kolomKosong.dataset.teksAsli = jawaban;
+            kolomKosong.textContent = teksUntukTampilan(jawaban);
+            kolomKosong.classList.remove("kosong");
+        }
+
         ambilElemen("umpanBalik").className = "umpan-balik baik";
         ambilElemen("umpanBalik").textContent = "Benar. Pasangan bait tepat.";
     } else {
