@@ -72,7 +72,9 @@ function perbaruiTampilanHarakat() {
 
     ["setengahKanan", "setengahKiri"].forEach(pengenal => {
         const setengah = ambilElemen(pengenal);
-        setengah.textContent = teksUntukTampilan(setengah.dataset.teksAsli);
+        if (!setengah.querySelector("[data-lihat-jawaban]")) {
+            setengah.textContent = teksUntukTampilan(setengah.dataset.teksAsli);
+        }
     });
 
     [...ambilElemen("daftarPilihan").children].forEach(tombol => {
@@ -197,8 +199,6 @@ function tampilkanSoal() {
     setengahKiri.textContent = teksUntukTampilan(setengahKiri.dataset.teksAsli);
     ambilElemen("setengahKanan").classList.toggle("kosong", tanyaPertama);
     ambilElemen("setengahKiri").classList.toggle("kosong", !tanyaPertama);
-    ambilElemen("setengahKanan").classList.remove("terisi-jawaban");
-    ambilElemen("setengahKiri").classList.remove("terisi-jawaban");
     ambilElemen("nomorBait").textContent = String(bait["ن"] ?? bait["نمر"] ?? "");
     ambilElemen("wadahBait").dataset.nomor = String(bait["ن"] ?? bait["نمر"] ?? "");
 
@@ -247,10 +247,17 @@ function pilihJawaban(tombolTerpilih, jawaban, jawabanBenar) {
         .find(setengah => setengah.classList.contains("kosong"));
 
     if (kolomKosong) {
-        kolomKosong.dataset.teksAsli = jawabanBenar;
-        kolomKosong.textContent = teksUntukTampilan(jawabanBenar);
-        kolomKosong.classList.remove("kosong");
-        kolomKosong.classList.add("terisi-jawaban");
+        const tombolLihat = document.createElement("button");
+        tombolLihat.type = "button";
+        tombolLihat.className = "tautan-jawaban";
+        tombolLihat.dataset.lihatJawaban = "true";
+        tombolLihat.textContent = "اضغط لإظهار الجواب";
+        tombolLihat.addEventListener("click", () => {
+            kolomKosong.dataset.teksAsli = jawabanBenar;
+            kolomKosong.textContent = teksUntukTampilan(jawabanBenar);
+            kolomKosong.classList.remove("kosong");
+        }, { once: true });
+        kolomKosong.replaceChildren(tombolLihat);
     }
 
     if (jawaban === jawabanBenar) {
