@@ -22,7 +22,7 @@
 }
 
 
-/* Tautan untuk menampilkan pasangan bait pada kolom yang kosong. */
+/* Barcode klik untuk menampilkan pasangan bait pada kolom kosong. */
 .tautan-jawaban {
     display: grid;
     place-items: center;
@@ -32,18 +32,46 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    color: #817968;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    text-align: center;
-    text-decoration: underline;
-    text-decoration-color: var(--warna-emas);
-    text-underline-offset: .16em;
     cursor: pointer;
 }
-.tautan-jawaban:hover {
-    color: var(--warna-utama);
-    background: transparent;
+
+.tautan-jawaban::before {
+    content: "";
+    display: block;
+    width: min(72%, 300px);
+    height: clamp(36px, 24%, 76px);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #817968 0 2px,
+            transparent 2px 4px,
+            #817968 4px 5px,
+            transparent 5px 8px,
+            #817968 8px 12px,
+            transparent 12px 14px,
+            #817968 14px 15px,
+            transparent 15px 19px
+        );
+    opacity: .85;
+}
+
+.tautan-jawaban:hover::before {
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--warna-utama) 0 2px,
+            transparent 2px 4px,
+            var(--warna-utama) 4px 5px,
+            transparent 5px 8px,
+            var(--warna-utama) 8px 12px,
+            transparent 12px 14px,
+            var(--warna-utama) 14px 15px,
+            transparent 15px 19px
+        );
+    opacity: 1;
+}
+
+.tautan-jawaban:focus-visible {
+    outline: 2px solid var(--warna-emas);
+    outline-offset: -5px;
 }
