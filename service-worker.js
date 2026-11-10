@@ -12,7 +12,6 @@ const DAFTAR_ASET = [
     "halaman-pembuka/beranda.css",
     "halaman-pembuka/app.js",
     "global/teks.js",
-    "global/teks.js",
     "asilah/index.html",
     "asilah/app.js",
     "muhafadzah/index.html",
