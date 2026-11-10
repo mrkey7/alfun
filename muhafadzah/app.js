@@ -2,9 +2,9 @@
 
 const HAPUS_HARAKAT = window.AlfiyahTeks.hapusHarakat;
 const BAGIAN = {
-    awal: { mulai:1, akhir:334 },
-    tsani: { mulai:335, akhir:668 },
-    tsalits: { mulai:669, akhir:1003 },
+    awal: { mulai:1, akhir:331 },
+    tsani: { mulai:332, akhir:675 },
+    tsalits: { mulai:676, akhir:1003 },
     semua: { mulai:1, akhir:1003 }
 };
 
