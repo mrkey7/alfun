@@ -5,7 +5,12 @@ const sedangReload = navigasi
     ? navigasi.type === "reload"
     : performance.navigation?.type === 1;
 
-if (sedangReload) location.replace(new URL("../index.html", location.href).href);
+if (sedangReload) {
+    const alamatBeranda = new URL("../index.html", location.href);
+    const token = new URLSearchParams(location.search).get("_fresh");
+    if (token) alamatBeranda.searchParams.set("_fresh", token);
+    location.replace(alamatBeranda.href);
+}
 const ambilElemen = pengenal => document.getElementById(pengenal);
 
 const ALAMAT_DATA = "../ألف.json";
@@ -319,7 +324,10 @@ function tampilkanHasil() {
 ambilElemen("tombolUlangi").addEventListener("click", () => mulaiKuis(bagianTerpilih));
 
 ambilElemen("tombolBeranda").addEventListener("click", () => {
-    location.href = "../index.html";
+    const alamatBeranda = new URL("../index.html", location.href);
+    const token = new URLSearchParams(location.search).get("_fresh");
+    if (token) alamatBeranda.searchParams.set("_fresh", token);
+    location.href = alamatBeranda.href;
 });
 
 if ("serviceWorker" in navigator) {
