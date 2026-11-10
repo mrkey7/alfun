@@ -197,6 +197,8 @@ function tampilkanSoal() {
     setengahKiri.textContent = teksUntukTampilan(setengahKiri.dataset.teksAsli);
     ambilElemen("setengahKanan").classList.toggle("kosong", tanyaPertama);
     ambilElemen("setengahKiri").classList.toggle("kosong", !tanyaPertama);
+    ambilElemen("setengahKanan").classList.remove("terisi-jawaban");
+    ambilElemen("setengahKiri").classList.remove("terisi-jawaban");
     ambilElemen("nomorBait").textContent = String(bait["ن"] ?? bait["نمر"] ?? "");
     ambilElemen("wadahBait").dataset.nomor = String(bait["ن"] ?? bait["نمر"] ?? "");
 
@@ -248,6 +250,7 @@ function pilihJawaban(tombolTerpilih, jawaban, jawabanBenar) {
         kolomKosong.dataset.teksAsli = jawabanBenar;
         kolomKosong.textContent = teksUntukTampilan(jawabanBenar);
         kolomKosong.classList.remove("kosong");
+        kolomKosong.classList.add("terisi-jawaban");
     }
 
     if (jawaban === jawabanBenar) {
