@@ -5,7 +5,7 @@ Aplikasi web statis untuk belajar dan menghafal Alfiyyah Ibnu Malik. Antarmuka m
 
 ## Menjalankan aplikasi
 
-Di Windows, klik dua kali `mulai_kuis.bat`. Skrip menjalankan server lokal dan membuka aplikasi di browser. Skrip memakai port 8000 jika tersedia; jika tidak, skrip otomatis memilih port lain. Tekan `Ctrl+C` pada jendela server untuk menghentikannya. Python harus sudah terpasang dan tersedia sebagai perintah `python`.
+Di Windows, klik dua kali `runme.bat`. Skrip menjalankan server lokal dan membuka aplikasi di browser. Skrip memakai port 8000 jika tersedia; jika tidak, skrip otomatis memilih port lain. Tekan `Ctrl+C` pada jendela server untuk menghentikannya. Python harus sudah terpasang dan tersedia sebagai perintah `python`.
 
 Untuk menjalankan langsung dari terminal, gunakan `python jalankan_server.py`. Service worker bekerja pada `localhost` atau konteks HTTPS, bukan pada halaman yang dibuka langsung dengan protokol `file:`.
 
@@ -20,9 +20,9 @@ Bagian data yang tersedia:
 
 | Bagian | Nomor bait |
 | --- | ---: |
-| Pertama | 1–334 |
-| Kedua | 335–668 |
-| Ketiga | 669–1003 |
+| Pertama | 1–331 |
+| Kedua | 332–675 |
+| Ketiga | 676–1003 |
 | Lengkap | 1–1003 |
 
 ## Harakat dan data
