@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#172554">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./gaya.css?v=29">
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const tautan = document.createElement("link");
+    tautan.rel = "stylesheet";
+    tautan.href = "./gaya.css" + (token ? "?_fresh=" + encodeURIComponent(token) : "");
+    document.head.appendChild(tautan);
+})();
+</script>
 <title>Muhafadzah · Alfiyyah</title>
 </head>
 <body>
@@ -17,7 +25,24 @@
     <section class="daftar-bait" id="daftarBait" aria-live="polite"></section>
     <p class="catatan-halaman" id="statusPemuatan" role="status" aria-live="polite"></p>
 </main>
-<script src="../global/teks.js?v=29"></script>
-<script src="./app.js?v=29" defer></script>
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const suffix = token ? "?_fresh=" + encodeURIComponent(token) : "";
+    const beranda = document.querySelector(".tombol-beranda");
+    if (token && beranda) {
+        const alamat = new URL(beranda.href);
+        alamat.searchParams.set("_fresh", token);
+        beranda.href = alamat.href;
+    }
+
+    ["../global/teks.js", "./app.js"].forEach(alamat => {
+        const skrip = document.createElement("script");
+        skrip.src = alamat + suffix;
+        skrip.async = false;
+        document.body.appendChild(skrip);
+    });
+})();
+</script>
 </body>
 </html>
