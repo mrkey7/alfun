@@ -1,4 +1,4 @@
-const NAMA_TEMBOLOK = "alfiyah-quiz-v28";
+const NAMA_TEMBOLOK = "alfiyah-quiz-v29";
 const DASAR_APLIKASI = new URL("./", self.location.href);
 const HALAMAN_APLIKASI = new URL("index.html", DASAR_APLIKASI).href;
 const BERKAS_DATA = new URL("ألف.json", DASAR_APLIKASI).href;
@@ -18,6 +18,8 @@ const DAFTAR_ASET = [
     "muhafadzah/index.html",
     "muhafadzah/app.js",
     "muhafadzah/gaya.css",
+    "muhafadzah/kendali.js",
+    "muhafadzah/kendali.css",
     "asilah/gaya/dasar.css",
     "asilah/gaya/potret-sempit.css",
     "asilah/gaya/potret-lebar.css",
