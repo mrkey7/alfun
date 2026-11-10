@@ -5,12 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#172554">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./gaya/dasar.css">
-<link rel="stylesheet" href="./gaya/potret-sempit.css">
-<link rel="stylesheet" href="./gaya/potret-lebar.css">
-<link rel="stylesheet" href="./gaya/landskap-pendek.css">
-<link rel="stylesheet" href="./gaya/landskap-tinggi.css">
-<link rel="stylesheet" href="./gaya/penyesuaian.css">
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const suffix = token ? "?_fresh=" + encodeURIComponent(token) : "";
+    [
+        "./gaya/dasar.css",
+        "./gaya/potret-sempit.css",
+        "./gaya/potret-lebar.css",
+        "./gaya/landskap-pendek.css",
+        "./gaya/landskap-tinggi.css",
+        "./gaya/penyesuaian.css"
+    ].forEach(alamat => {
+        const tautan = document.createElement("link");
+        tautan.rel = "stylesheet";
+        tautan.href = alamat + suffix;
+        document.head.appendChild(tautan);
+    });
+})();
+</script>
 <title>Asilah · Alfiyyah</title>
 </head>
 <body>
@@ -52,7 +65,24 @@
         </div>
     </section>
 </main>
-<script src="../global/teks.js"></script>
-<script src="./app.js" defer></script>
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const suffix = token ? "?_fresh=" + encodeURIComponent(token) : "";
+    document.querySelectorAll('a[href="../index.html"]').forEach(tautan => {
+        if (!token) return;
+        const alamat = new URL(tautan.href);
+        alamat.searchParams.set("_fresh", token);
+        tautan.href = alamat.href;
+    });
+
+    ["../global/teks.js", "./app.js"].forEach(alamat => {
+        const skrip = document.createElement("script");
+        skrip.src = alamat + suffix;
+        skrip.async = false;
+        document.body.appendChild(skrip);
+    });
+})();
+</script>
 </body>
 </html>
