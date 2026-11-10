@@ -80,6 +80,7 @@ button:disabled { opacity: .25; cursor: default; }
     min-width: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 5.5em minmax(0, 1fr);
+    direction: rtl;
     align-items: center;
     border-bottom: 1px solid var(--garis);
     padding-inline: 8px;
