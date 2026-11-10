@@ -27,7 +27,12 @@ function teksTampilan(teks) {
 
 async function muatData() {
     try {
-        const tanggapan = await fetch("../ألف.json");
+        const alamatData = new URL("../ألف.json", location.href);
+        const token = new URLSearchParams(location.search).get("_fresh");
+        if (token) alamatData.searchParams.set("_fresh", token);
+        const tanggapan = await fetch(alamatData.href, {
+            cache: token ? "no-store" : "default"
+        });
         if (!tanggapan.ok) throw new Error("HTTP " + tanggapan.status);
         const data = await tanggapan.json();
         if (!data || !Array.isArray(data.rows)) throw new Error("Format data Alfiyyah tidak sesuai.");
@@ -102,7 +107,7 @@ ambil("tombolHarakat").addEventListener("click", () => {
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("../service-worker.js")
+    navigator.serviceWorker.register("../service-worker.js", { updateViaCache:"none" })
         .catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
 }
 muatData();
