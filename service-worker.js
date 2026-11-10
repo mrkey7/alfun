@@ -1,8 +1,9 @@
-const NAMA_TEMBOLOK = "alfiyah-quiz-v30";
+const NAMA_TEMBOLOK = "alfiyah-quiz-v31";
 const DASAR_APLIKASI = new URL("./", self.location.href);
 const HALAMAN_APLIKASI = new URL("index.html", DASAR_APLIKASI).href;
 const BERKAS_DATA = new URL("ألف.json", DASAR_APLIKASI).href;
 const DAFTAR_ASET = [
+    "service-worker.js",
     "index.html",
     "gaya/dasar.css",
     "gaya/potret-sempit.css",
@@ -28,10 +29,28 @@ const DAFTAR_ASET = [
 ].map(jalur => new URL(jalur, DASAR_APLIKASI).href);
 const JALUR_CAKUPAN = DASAR_APLIKASI.pathname;
 
+async function simpanSumber(tembolok, jalur, token = "") {
+    const alamatCache = new URL(jalur, DASAR_APLIKASI);
+    const alamatAmbil = new URL(alamatCache.href);
+    if (token) alamatAmbil.searchParams.set("_fresh", token);
+
+    const tanggapan = await fetch(new Request(alamatAmbil.href, { cache:"no-store" }));
+    if (!tanggapan.ok && tanggapan.type !== "opaque") {
+        throw new Error(jalur + " · HTTP " + tanggapan.status);
+    }
+    await tembolok.put(alamatCache.href, tanggapan.clone());
+}
+
+function daftarSumberAplikasi() {
+    return [...new Set([HALAMAN_APLIKASI, ...DAFTAR_ASET, BERKAS_DATA])];
+}
+
 self.addEventListener("install", peristiwa => {
     peristiwa.waitUntil((async () => {
         const tembolok = await caches.open(NAMA_TEMBOLOK);
-        await tembolok.addAll([HALAMAN_APLIKASI, ...DAFTAR_ASET, BERKAS_DATA]);
+        await Promise.all(
+            daftarSumberAplikasi().map(jalur => simpanSumber(tembolok, jalur))
+        );
         await simpanAwalFontGoogle(tembolok);
         await self.skipWaiting();
     })());
@@ -47,6 +66,35 @@ self.addEventListener("activate", peristiwa => {
         );
         await self.clients.claim();
     })());
+});
+
+self.addEventListener("message", peristiwa => {
+    const pesan = peristiwa.data || {};
+    if (pesan.type !== "ALFUN_REFRESH_SOURCES") return;
+
+    const kanal = peristiwa.ports?.[0];
+    peristiwa.waitUntil((async () => {
+        const daftar = daftarSumberAplikasi();
+        const tembolok = await caches.open(NAMA_TEMBOLOK);
+
+        for (let indeks = 0; indeks < daftar.length; indeks++) {
+            const jalur = daftar[indeks];
+            await simpanSumber(tembolok, jalur, String(pesan.token || Date.now()));
+            kanal?.postMessage({
+                type: "progress",
+                selesai: indeks + 1,
+                jumlah: daftar.length,
+                jalur
+            });
+        }
+
+        kanal?.postMessage({ type: "done", jumlah: daftar.length });
+    })().catch(kesalahan => {
+        kanal?.postMessage({
+            type: "error",
+            pesan: kesalahan?.message || String(kesalahan)
+        });
+    }));
 });
 
 self.addEventListener("fetch", peristiwa => {
