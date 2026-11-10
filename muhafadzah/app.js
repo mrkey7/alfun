@@ -1,6 +1,11 @@
 "use strict";
 
-const HAPUS_HARAKAT = window.AlfiyahTeks?.hapusHarakat ?? (teks => String(teks ?? "").replace(/[\\u064B-\\u065F\\u0670]/g, ""));
+const HAPUS_HARAKAT = window.AlfiyahTeks?.hapusHarakat ?? (teks =>
+    [...String(teks ?? "")].filter(karakter => {
+        const kode = karakter.codePointAt(0);
+        return (kode < 1611 || kode > 1631) && kode !== 1648;
+    }).join("")
+);
 const BAGIAN = {
     awal: { mulai:1, akhir:331 },
     tsani: { mulai:332, akhir:675 },
