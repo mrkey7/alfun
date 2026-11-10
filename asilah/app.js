@@ -251,7 +251,7 @@ function pilihJawaban(tombolTerpilih, jawaban, jawabanBenar) {
         tombolLihat.type = "button";
         tombolLihat.className = "tautan-jawaban";
         tombolLihat.dataset.lihatJawaban = "true";
-        tombolLihat.textContent = "اضغط لإظهار الجواب";
+        tombolLihat.setAttribute("aria-label", "Klik untuk menampilkan jawaban");
         tombolLihat.addEventListener("click", () => {
             kolomKosong.dataset.teksAsli = jawabanBenar;
             kolomKosong.textContent = teksUntukTampilan(jawabanBenar);
