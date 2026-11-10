@@ -1,6 +1,6 @@
 "use strict";
 
-const HAPUS_HARAKAT = window.AlfiyahTeks.hapusHarakat;
+const HAPUS_HARAKAT = window.AlfiyahTeks?.hapusHarakat ?? (teks => String(teks ?? "").replace(/[\\u064B-\\u065F\\u0670]/g, ""));
 const BAGIAN = {
     awal: { mulai:1, akhir:331 },
     tsani: { mulai:332, akhir:675 },
