@@ -107,7 +107,12 @@ ambil("tombolHarakat").addEventListener("click", () => {
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("../service-worker.js", { updateViaCache:"none" })
-        .catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
+    navigator.serviceWorker.getRegistration().then(registrasi => {
+        if (!registrasi) {
+            return navigator.serviceWorker.register("../service-worker.js", {
+                updateViaCache:"all"
+            });
+        }
+    }).catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
 }
 muatData();
