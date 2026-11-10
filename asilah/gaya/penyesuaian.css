@@ -21,8 +21,29 @@
     }
 }
 
-/* Jawaban yang mengisi bagian kosong dibuat lebih kecil dan redup dari bait asli. */
-.setengah-bait.terisi-jawaban {
+
+/* Tautan untuk menampilkan pasangan bait pada kolom yang kosong. */
+.tautan-jawaban {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: #817968;
-    font-size: .72em;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: var(--warna-emas);
+    text-underline-offset: .16em;
+    cursor: pointer;
+}
+.tautan-jawaban:hover {
+    color: var(--warna-utama);
+    background: transparent;
 }
