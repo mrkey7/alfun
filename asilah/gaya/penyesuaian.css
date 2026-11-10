@@ -20,3 +20,9 @@
         font-size: 10px;
     }
 }
+
+/* Jawaban yang mengisi bagian kosong dibuat lebih kecil dan redup dari bait asli. */
+.setengah-bait.terisi-jawaban {
+    color: #817968;
+    font-size: .72em;
+}
