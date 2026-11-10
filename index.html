@@ -5,12 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#172554">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Gaya dasar dimuat lebih dulu, lalu aturan untuk kelompok layar. -->
-<link rel="stylesheet" href="./gaya/dasar.css">
-<link rel="stylesheet" href="./gaya/potret-sempit.css">
-<link rel="stylesheet" href="./gaya/potret-lebar.css">
-<link rel="stylesheet" href="./gaya/landskap-pendek.css">
-<link rel="stylesheet" href="./gaya/landskap-tinggi.css">
+<!-- Aset CSS memakai token unik setelah tombol R agar cache HTTP tidak dipakai. -->
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const suffix = token ? "?_fresh=" + encodeURIComponent(token) : "";
+    [
+        "./gaya/dasar.css",
+        "./gaya/potret-sempit.css",
+        "./gaya/potret-lebar.css",
+        "./gaya/landskap-pendek.css",
+        "./gaya/landskap-tinggi.css"
+    ].forEach(alamat => {
+        const tautan = document.createElement("link");
+        tautan.rel = "stylesheet";
+        tautan.href = alamat + suffix;
+        document.head.appendChild(tautan);
+    });
+})();
+</script>
 <title>Alfiyyah - Belajar Alfiyyah Ibnu Malik</title>
 </head>
 <body>
@@ -39,6 +52,14 @@
     </section>
 
     </main>
-<script src="./halaman-pembuka/app.js" defer></script>
+<script>
+(() => {
+    const token = new URLSearchParams(location.search).get("_fresh");
+    const skrip = document.createElement("script");
+    skrip.src = "./halaman-pembuka/app.js" +
+        (token ? "?_fresh=" + encodeURIComponent(token) : "");
+    document.body.appendChild(skrip);
+})();
+</script>
 </body>
 </html>
