@@ -87,6 +87,8 @@ async function perbaruiServiceWorker(registrasi) {
     registrasi.addEventListener("updatefound", saatPembaruanDitemukan);
     try {
         await registrasi.update();
+    } catch (kesalahan) {
+        throw new Error("Tidak ada koneksi ke server. Sumber lama tetap digunakan.");
     } finally {
         registrasi.removeEventListener("updatefound", saatPembaruanDitemukan);
     }
@@ -158,6 +160,9 @@ tombolAturUlangTembolok.addEventListener("click", async () => {
         if (!("serviceWorker" in navigator)) {
             throw new Error("Browser ini tidak mendukung Service Worker.");
         }
+        if (navigator.onLine === false) {
+            throw new Error("Tidak ada koneksi internet. Sumber lama tetap digunakan.");
+        }
 
         const token = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
         tampilkanStatusResetR("R 1/4 · Memeriksa Service Worker...");
@@ -186,13 +191,19 @@ tombolAturUlangTembolok.addEventListener("click", async () => {
     } catch (kesalahan) {
         tombolAturUlangTembolok.disabled = false;
         tombolAturUlangTembolok.textContent = teksTombolAwal;
-        tampilkanStatusResetR("R GAGAL · " + (kesalahan?.message || String(kesalahan)));
+        const pesan = kesalahan?.message || String(kesalahan);
+        tampilkanStatusResetR("R TIDAK DIPERBARUI · " + pesan);
     }
 });
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js", { updateViaCache:"none" })
-        .catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
+    navigator.serviceWorker.getRegistration().then(registrasi => {
+        if (!registrasi) {
+            return navigator.serviceWorker.register("./service-worker.js", {
+                updateViaCache:"all"
+            });
+        }
+    }).catch(kesalahan => console.error("Service Worker gagal didaftarkan:", kesalahan));
 }
 
 muatData();
