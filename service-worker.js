@@ -1,4 +1,4 @@
-const NAMA_TEMBOLOK = "alfiyah-quiz-v31";
+const NAMA_TEMBOLOK = "alfiyah-quiz-v32";
 const DASAR_APLIKASI = new URL("./", self.location.href);
 const HALAMAN_APLIKASI = new URL("index.html", DASAR_APLIKASI).href;
 const BERKAS_DATA = new URL("ألف.json", DASAR_APLIKASI).href;
@@ -75,20 +75,37 @@ self.addEventListener("message", peristiwa => {
     const kanal = peristiwa.ports?.[0];
     peristiwa.waitUntil((async () => {
         const daftar = daftarSumberAplikasi();
-        const tembolok = await caches.open(NAMA_TEMBOLOK);
+        const token = String(pesan.token || Date.now());
+        const namaCacheSementara = "alfun-refresh-" + token;
+        await caches.delete(namaCacheSementara);
 
-        for (let indeks = 0; indeks < daftar.length; indeks++) {
-            const jalur = daftar[indeks];
-            await simpanSumber(tembolok, jalur, String(pesan.token || Date.now()));
-            kanal?.postMessage({
-                type: "progress",
-                selesai: indeks + 1,
-                jumlah: daftar.length,
-                jalur
-            });
+        try {
+            const cacheSementara = await caches.open(namaCacheSementara);
+
+            for (let indeks = 0; indeks < daftar.length; indeks++) {
+                const jalur = daftar[indeks];
+                await simpanSumber(cacheSementara, jalur, token);
+                kanal?.postMessage({
+                    type: "progress",
+                    selesai: indeks + 1,
+                    jumlah: daftar.length,
+                    jalur
+                });
+            }
+
+            // Cache lama baru diganti setelah seluruh sumber berhasil diunduh.
+            const cacheUtama = await caches.open(NAMA_TEMBOLOK);
+            for (const kunci of await cacheSementara.keys()) {
+                const tanggapan = await cacheSementara.match(kunci);
+                if (tanggapan) await cacheUtama.put(kunci, tanggapan);
+            }
+
+            await caches.delete(namaCacheSementara);
+            kanal?.postMessage({ type: "done", jumlah: daftar.length });
+        } catch (kesalahan) {
+            await caches.delete(namaCacheSementara);
+            throw kesalahan;
         }
-
-        kanal?.postMessage({ type: "done", jumlah: daftar.length });
     })().catch(kesalahan => {
         kanal?.postMessage({
             type: "error",
@@ -104,58 +121,37 @@ self.addEventListener("fetch", peristiwa => {
     const alamat = new URL(permintaan.url);
     if (alamat.origin !== self.location.origin) {
         if (alamat.hostname === "fonts.googleapis.com" || alamat.hostname === "fonts.gstatic.com") {
-            peristiwa.respondWith(jaringanDahulu(permintaan));
+            peristiwa.respondWith(tembolokDahulu(permintaan));
         }
         return;
     }
     if (!alamat.pathname.startsWith(JALUR_CAKUPAN)) return;
 
-    const jalurTanpaParameter = new URL(alamat.pathname, self.location.origin).href;
-    if (alamat.pathname === new URL(BERKAS_DATA).pathname) {
-        peristiwa.respondWith(jaringanDahulu(permintaan, BERKAS_DATA));
-        return;
+    const alamatCache = new URL(alamat.href);
+    alamatCache.search = "";
+    alamatCache.hash = "";
+    if (alamatCache.pathname.endsWith("/")) {
+        alamatCache.pathname += "index.html";
     }
-    if (DAFTAR_ASET.some(aset => alamat.pathname === new URL(aset).pathname)) {
-        peristiwa.respondWith(jaringanDahulu(permintaan, jalurTanpaParameter));
-        return;
-    }
-    if (permintaan.mode === "navigate") {
-        const cadangan = alamat.pathname.endsWith("/")
-            ? new URL("index.html", alamat).href
-            : jalurTanpaParameter;
-        peristiwa.respondWith(jaringanDahulu(permintaan, cadangan));
-        return;
-    }
-    peristiwa.respondWith(tembolokDahulu(permintaan));
+
+    const kunciCache = new Request(alamatCache.href, { method:"GET" });
+    peristiwa.respondWith(tembolokDahulu(permintaan, kunciCache));
 });
 
-async function jaringanDahulu(permintaan, kunciTembolok = permintaan) {
+async function tembolokDahulu(permintaan, kunciCache = permintaan) {
     const tembolok = await caches.open(NAMA_TEMBOLOK);
+    const tersimpan = await tembolok.match(kunciCache);
+    if (tersimpan) return tersimpan;
+
     try {
-        const tanggapan = await fetch(permintaan, { cache:"no-cache" });
+        const tanggapan = await fetch(permintaan);
         if (tanggapan && (tanggapan.ok || tanggapan.type === "opaque")) {
-            try {
-                await tembolok.put(kunciTembolok, tanggapan.clone());
-            } catch (kesalahan) {
-                console.warn("Cache tidak dapat diperbarui:", kesalahan);
-            }
+            await tembolok.put(kunciCache, tanggapan.clone());
         }
         return tanggapan;
     } catch (kesalahan) {
-        const tersimpan = await tembolok.match(kunciTembolok);
-        return tersimpan || Response.error();
+        return Response.error();
     }
-}
-
-async function tembolokDahulu(permintaan) {
-    const tersimpan = await caches.match(permintaan);
-    if (tersimpan) return tersimpan;
-    const tanggapan = await fetch(permintaan);
-    if (tanggapan && tanggapan.ok) {
-        const tembolok = await caches.open(NAMA_TEMBOLOK);
-        await tembolok.put(permintaan, tanggapan.clone());
-    }
-    return tanggapan;
 }
 
 async function simpanAwalFontGoogle(tembolok) {
