@@ -59,86 +59,134 @@ function tampilkanStatusResetR(teks) {
     statusResetR.style.display = "block";
 }
 
+function tungguWorkerAktif(worker) {
+    if (!worker) return Promise.resolve();
+
+    return new Promise((resolve, reject) => {
+        const periksa = () => {
+            if (worker.state === "activated") {
+                worker.removeEventListener("statechange", periksa);
+                resolve();
+            } else if (worker.state === "redundant") {
+                worker.removeEventListener("statechange", periksa);
+                reject(new Error("Pembaruan Service Worker gagal diaktifkan."));
+            }
+        };
+
+        worker.addEventListener("statechange", periksa);
+        periksa();
+    });
+}
+
+async function perbaruiServiceWorker(registrasi) {
+    let workerBaru = null;
+    const saatPembaruanDitemukan = () => {
+        workerBaru = registrasi.installing;
+    };
+
+    registrasi.addEventListener("updatefound", saatPembaruanDitemukan);
+    try {
+        await registrasi.update();
+    } finally {
+        registrasi.removeEventListener("updatefound", saatPembaruanDitemukan);
+    }
+
+    workerBaru = registrasi.installing || registrasi.waiting || workerBaru;
+    if (workerBaru) await tungguWorkerAktif(workerBaru);
+
+    const workerAktif = registrasi.active;
+    if (!workerAktif || workerAktif.state !== "activated") {
+        throw new Error("Service Worker belum aktif.");
+    }
+    return workerAktif;
+}
+
+function segarkanMelaluiWorker(worker, token) {
+    return new Promise((resolve, reject) => {
+        const kanal = new MessageChannel();
+        const batasWaktu = setTimeout(() => {
+            kanal.port1.close();
+            reject(new Error("Waktu pengambilan sumber habis."));
+        }, 120000);
+
+        kanal.port1.onmessage = peristiwa => {
+            const pesan = peristiwa.data || {};
+
+            if (pesan.type === "progress") {
+                tampilkanStatusResetR(
+                    "R 3/4 · Mengambil sumber " + pesan.selesai + "/" + pesan.jumlah +
+                    " · " + pesan.jalur.split("/").pop()
+                );
+            } else if (pesan.type === "done") {
+                clearTimeout(batasWaktu);
+                kanal.port1.close();
+                resolve(pesan.jumlah);
+            } else if (pesan.type === "error") {
+                clearTimeout(batasWaktu);
+                kanal.port1.close();
+                reject(new Error(pesan.pesan));
+            }
+        };
+
+        kanal.port1.onmessageerror = () => {
+            clearTimeout(batasWaktu);
+            kanal.port1.close();
+            reject(new Error("Jawaban dari Service Worker tidak dapat dibaca."));
+        };
+
+        try {
+            worker.postMessage(
+                { type:"ALFUN_REFRESH_SOURCES", token },
+                [kanal.port2]
+            );
+        } catch (kesalahan) {
+            clearTimeout(batasWaktu);
+            kanal.port1.close();
+            reject(kesalahan);
+        }
+    });
+}
+
 tombolAturUlangTembolok.addEventListener("click", async () => {
-    if (!confirm("Ambil ulang seluruh sumber aplikasi dari folder/server lokal, abaikan cache lama?")) return;
+    if (!confirm("Ambil ulang sumber aplikasi dan perbarui cache dari server/folder yang sedang dibuka?")) return;
 
     tombolAturUlangTembolok.disabled = true;
     const teksTombolAwal = tombolAturUlangTembolok.textContent;
     tombolAturUlangTembolok.textContent = "…";
 
     try {
-        const dasarAplikasi = new URL("./", location.href);
+        if (!("serviceWorker" in navigator)) {
+            throw new Error("Browser ini tidak mendukung Service Worker.");
+        }
+
         const token = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-        const alamatServiceWorker = new URL("service-worker.js", dasarAplikasi);
-        alamatServiceWorker.searchParams.set("_fresh", token);
+        tampilkanStatusResetR("R 1/4 · Memeriksa Service Worker...");
 
-        tampilkanStatusResetR("R 1/4 · Mengambil daftar sumber terbaru...");
-        const responsServiceWorker = await fetch(alamatServiceWorker.href, { cache:"no-store" });
-        if (!responsServiceWorker.ok) {
-            throw new Error("service-worker.js · HTTP " + responsServiceWorker.status);
-        }
-        const teksServiceWorker = await responsServiceWorker.text();
-
-        const cocokAset = teksServiceWorker.match(
-            /const\s+DAFTAR_ASET\s*=\s*(\[[\s\S]*?\])\s*\.map\s*\(/
-        );
-        if (!cocokAset) throw new Error("Daftar aset tidak ditemukan di service-worker.js.");
-
-        const daftarAset = JSON.parse(cocokAset[1]);
-        const cocokData = teksServiceWorker.match(
-            /const\s+BERKAS_DATA\s*=\s*new URL\("([^"]+)"/
-        );
-        const jalurData = cocokData ? cocokData[1] : "ألف.json";
-        const daftarJalur = [...new Set([
-            "index.html",
-            "service-worker.js",
-            jalurData,
-            ...daftarAset
-        ])];
-
-        tampilkanStatusResetR("R 2/4 · Melepas Service Worker dan menghapus cache aplikasi...");
-        const daftarPendaftaran = await navigator.serviceWorker?.getRegistrations() ?? [];
-        await Promise.all(
-            daftarPendaftaran
-                .filter(pendaftaran => new URL(pendaftaran.scope).pathname.startsWith(dasarAplikasi.pathname))
-                .map(pendaftaran => pendaftaran.unregister())
-        );
-
-        const daftarKunciCache = await caches.keys();
-        await Promise.all(
-            daftarKunciCache
-                .filter(kunci => kunci.startsWith("alfiyah-quiz-"))
-                .map(kunci => caches.delete(kunci))
-        );
-
-        tampilkanStatusResetR("R 3/4 · Memverifikasi " + daftarJalur.length + " sumber dengan URL baru...");
-        let jumlahSelesai = 0;
-        for (const jalur of daftarJalur) {
-            const alamat = new URL(jalur, dasarAplikasi);
-            alamat.searchParams.set("_fresh", token);
-            const respons = await fetch(alamat.href, { cache:"no-store" });
-
-            if (!respons.ok && respons.type !== "opaque") {
-                throw new Error(alamat.pathname + " · HTTP " + respons.status);
-            }
-
-            await respons.arrayBuffer();
-            jumlahSelesai++;
-            tampilkanStatusResetR(
-                "R 3/4 · Terverifikasi " + jumlahSelesai + "/" + daftarJalur.length +
-                " · " + (jalur.split("/").pop() || "index")
-            );
+        let registrasi = await navigator.serviceWorker.getRegistration();
+        if (!registrasi) {
+            registrasi = await navigator.serviceWorker.register("./service-worker.js", {
+                updateViaCache:"none"
+            });
         }
 
-        tampilkanStatusResetR("R 4/4 · Semua sumber berhasil diambil. Membuka ulang aplikasi...");
-        const alamatBaru = new URL("index.html", dasarAplikasi);
+        tampilkanStatusResetR("R 2/4 · Memastikan kode Service Worker terbaru aktif...");
+        const workerAktif = await perbaruiServiceWorker(registrasi);
+
+        tampilkanStatusResetR("R 3/4 · Mengambil ulang seluruh sumber aplikasi...");
+        const jumlahSumber = await segarkanMelaluiWorker(workerAktif, token);
+
+        tampilkanStatusResetR(
+            "R 4/4 · " + jumlahSumber + " sumber berhasil diperbarui. Memuat ulang aplikasi..."
+        );
+
+        const alamatBaru = new URL("./", location.href);
         alamatBaru.searchParams.set("_fresh", token);
         alamatBaru.searchParams.set("_reset", token);
         location.replace(alamatBaru.href);
     } catch (kesalahan) {
         tombolAturUlangTembolok.disabled = false;
         tombolAturUlangTembolok.textContent = teksTombolAwal;
-        tampilkanStatusResetR("R GAGAL · " + kesalahan.message);
+        tampilkanStatusResetR("R GAGAL · " + (kesalahan?.message || String(kesalahan)));
     }
 });
 
